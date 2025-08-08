@@ -1,26 +1,4 @@
-type Student = {
-    readonly studentId: string;
-    name: string;
-    email: string;
-    hasCompleted: boolean;
-    finalScore?: number;
-};
-
-type Course = {
-    courseId: string;
-    title: string;
-    instructor: string;
-    students: Student[];
-    isActive: boolean;
-};
-
-type CourseManager = {
-    schoolName: string;
-    year: number;
-    courses: Course[];
-};
-
-const courseManager: CourseManager = {
+var courseManager = {
     schoolName: "MindX School",
     year: 2024,
     courses: [
@@ -47,38 +25,28 @@ const courseManager: CourseManager = {
         }
     ]
 };
-
-function getCompletedStudents(course: Course): Student[] {
-    return course.students.filter(student => student.hasCompleted);
+function getCompletedStudents(course) {
+    return course.students.filter(function (student) { return student.hasCompleted; });
 }
-
-function calculateAverageScore(course: Course): number | null {
-    const studentsWithScores = course.students.filter(
-        student => student.hasCompleted && typeof student.finalScore === 'number'
-    );
-
+function calculateAverageScore(course) {
+    var studentsWithScores = course.students.filter(function (student) { return student.hasCompleted && typeof student.finalScore === 'number'; });
     if (studentsWithScores.length === 0) {
         return null;
     }
-
-    const totalScore = studentsWithScores.reduce((sum, student) => sum + student.finalScore!, 0);
+    var totalScore = studentsWithScores.reduce(function (sum, student) { return sum + student.finalScore; }, 0);
     return totalScore / studentsWithScores.length;
 }
-
-function printCourseReport(manager: CourseManager): void {
-    console.log(`BÁO CÁO KHÓA HỌC - ${manager.schoolName} - NĂM ${manager.year}`);
+function printCourseReport(manager) {
+    console.log("B\u00C1O C\u00C1O KH\u00D3A H\u1ECCC - ".concat(manager.schoolName, " - N\u0102M ").concat(manager.year));
     console.log("======================================================");
-
-    manager.courses.forEach((course, index) => {
-        const completedStudents = getCompletedStudents(course);
-        const averageScore = calculateAverageScore(course);
-
-        console.log(`\n${index + 1}.Khóa: ${course.title} (GV: ${course.instructor})`);
-        console.log(`-  Tổng học viên: ${course.students.length}`);
-        console.log(`-  Hoàn thành: ${completedStudents.length} học viên`);
-        console.log(`-  Trung bình điểm: ${averageScore !== null ? averageScore.toFixed(1) : 'N/A'}`);
-        console.log(`-  Trạng thái: ${course.isActive ? 'ĐANG MỞ' : 'ĐÃ ĐÓNG'}`);
+    manager.courses.forEach(function (course, index) {
+        var completedStudents = getCompletedStudents(course);
+        var averageScore = calculateAverageScore(course);
+        console.log("\n".concat(index + 1, ".Kh\u00F3a: ").concat(course.title, " (GV: ").concat(course.instructor, ")"));
+        console.log("-  T\u1ED5ng h\u1ECDc vi\u00EAn: ".concat(course.students.length));
+        console.log("-  Ho\u00E0n th\u00E0nh: ".concat(completedStudents.length, " h\u1ECDc vi\u00EAn"));
+        console.log("-  Trung b\u00ECnh \u0111i\u1EC3m: ".concat(averageScore !== null ? averageScore.toFixed(1) : 'N/A'));
+        console.log("-  Tr\u1EA1ng th\u00E1i: ".concat(course.isActive ? 'ĐANG MỞ' : 'ĐÃ ĐÓNG'));
     });
 }
-
 printCourseReport(courseManager);
